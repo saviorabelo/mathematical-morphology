@@ -11,34 +11,33 @@ from skimage import morphology
 from skimage.morphology import square, rectangle, disk
 
 
-file_name = '3303_lg.tiff'
-folha = rgb2gray(imread(file_name, as_grey=True))
+file_name = './Dataset Image/Alprazolam/4047_lg.jpg'
+image = rgb2gray(imread(file_name))
 
-#folha = morphology.opening(folha, disk(5))
-cont_ext = morphology.dilation(folha, disk(3)) - folha
+#image = morphology.opening(image, disk(5))
+image_ext = morphology.dilation(image, disk(3)) - image
+
+# Watershed
+markers = np.zeros(image.shape)
+markers[90:110,20:40] = 200
+markers[90:110,90:110] = 100
+ws = morphology.watershed(image_ext, markers)
 
 
-# Show image
-def show_images(image, markers, watershed):
-    fig = plt.figure(figsize=(20,20))
-    a = fig.add_subplot(1,3,1)
-    plt.imshow(image, cmap=plt.cm.gray)
-    a.set_title('Original')
-    plt.axis('off')
+# Plot
+fig, (ax0, ax1, ax2) = plt.subplots(nrows=1, ncols=3, figsize=(8, 2.5), sharex=True, sharey=True)
 
-    a = fig.add_subplot(1,3,2)
-    plt.imshow(markers, cmap=plt.cm.gray)
-    a.set_title('Marcadores')
-    plt.axis('off')
+ax0.imshow(255-image_ext, cmap=plt.get_cmap('gray'))
+ax0.set_title('Image')
+ax0.axis('off')
 
-    a = fig.add_subplot(1,3,3)
-    plt.imshow(watershed,cmap=plt.cm.nipy_spectral, interpolation='nearest')
-    a.set_title('Watershed')
-    plt.axis('off')
-    
+ax1.imshow(markers, cmap=plt.get_cmap('gray'))
+ax1.set_title('Markers')
+ax1.axis('off')
 
-fig = plt.figure(figsize=(10,10))
-a = fig.add_subplot(1,1,1)
-plt.imshow(folha, cmap=plt.cm.gray)
-a.set_title('Original')
-plt.axis('off')
+ax2.imshow(ws, cmap=plt.get_cmap('nipy_spectral'), interpolation='nearest')
+ax2.set_title('Watershed')
+ax2.axis('off')
+
+fig.tight_layout()
+plt.show()
