@@ -18,7 +18,7 @@ folha = rgb2gray(imread(file_name, as_grey=True))
 cont_ext = morphology.dilation(folha, disk(3)) - folha
 
 
-# Exibe imagens
+# Show image
 def show_images(image, markers, watershed):
     fig = plt.figure(figsize=(20,20))
     a = fig.add_subplot(1,3,1)
