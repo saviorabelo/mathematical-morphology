@@ -1,9 +1,4 @@
 # Import library
-import numpy as np
-from skimage.io import imread
-from skimage.color import rgb2gray
-from skimage import morphology
-from skimage.morphology import disk, square, rectangle
 import matplotlib.pyplot as plt
 
 def show_images(image, dilation, markers, watershed):
