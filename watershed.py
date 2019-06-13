@@ -8,8 +8,7 @@ from skimage.morphology import disk, square, rectangle
 # Import functions
 from functions import *
 
-#file_name = './Dataset Image/Alprazolam/3527_lg.jpg'
-file_name = './Dataset Image/Domino/4424_lg.jpg'
+file_name = './Dataset/13291732973114.jpg'
 img = imread(file_name)
 image = rgb2gray(img)
 image_ext = morphology.dilation(image, disk(3)) - image
