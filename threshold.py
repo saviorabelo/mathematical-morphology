@@ -1,5 +1,12 @@
+# -*- coding: utf-8 -*-
+# Import library
+import numpy as np
+from skimage.io import imread
+import matplotlib.pyplot as plt
 # Import functions
-from functions import *
+from functions import threshold_mean
+from functions import threshold_mean_iter
+from functions import plots
 
 
 file_name = './Dataset/13291732978427.jpg'

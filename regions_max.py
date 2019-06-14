@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
+# Import library
 import numpy as np
 import matplotlib.pyplot as plt
-
 from scipy.ndimage import gaussian_filter
 from skimage import data
 from skimage import img_as_float
@@ -19,18 +20,18 @@ dilated = reconstruction(seed, mask, method='dilation')
 # Exibe imagens
 fig = plt.figure(figsize=(20,20))
 a = fig.add_subplot(1,3,1)
-plt.imshow(image, cmap=plt.cm.gray)
+plt.imshow(image, cmap=plt.get_cmap('gray'))
 a.set_title('Máscara')
 plt.axis('off')
 
 a = fig.add_subplot(1,3,2)
-plt.imshow(seed, cmap=plt.cm.gray)
+plt.imshow(seed, cmap=plt.get_cmap('gray'))
 a.set_title('Marcador')
 plt.axis('off')
 
 a = fig.add_subplot(1,3,3)
-plt.imshow(dilated, cmap=plt.cm.gray)
+plt.imshow(dilated, cmap=plt.get_cmap('gray'))
 a.set_title('Reconstrução')
 plt.axis('off')
 
-
+plt.show()

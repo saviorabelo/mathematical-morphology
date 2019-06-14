@@ -1,5 +1,9 @@
-# Import functions
-from functions import *
+# -*- coding: utf-8 -*-
+# Import library
+from skimage.io import imread
+from scipy import signal
+import matplotlib.pyplot as plt
+
 
 file_name = './Dataset/13291732978427.jpg'
 imagem = imread(file_name, as_grey=True)

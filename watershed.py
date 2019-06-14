@@ -1,5 +1,14 @@
+# -*- coding: utf-8 -*-
+# Import library
+import math
+import numpy as np
+from skimage.io import imread
+from skimage import morphology
+import matplotlib.pyplot as plt
+from skimage.color import rgb2gray
+from skimage.morphology import disk
 # Import functions
-from functions import *
+from functions import show_images_ws
 
 file_name = './Dataset/13291732978427.jpg'
 img = imread(file_name)

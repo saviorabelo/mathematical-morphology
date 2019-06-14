@@ -1,13 +1,7 @@
 # -*- coding: utf-8 -*-
 # Import library
-import math
 import numpy as np
-from skimage.io import imread
-from scipy import signal
-from skimage import morphology
 import matplotlib.pyplot as plt
-from skimage.color import rgb2gray
-from skimage.morphology import disk, square, rectangle
 
 def show_images_ws(image, dilation, markers, watershed):
     fig, (ax0, ax1, ax2, ax3) = plt.subplots(nrows=1, ncols=4, figsize=(8, 2.5), sharex=True, sharey=True)
