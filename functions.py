@@ -3,6 +3,7 @@
 import math
 import numpy as np
 from skimage.io import imread
+from scipy import signal
 from skimage import morphology
 import matplotlib.pyplot as plt
 from skimage.color import rgb2gray
