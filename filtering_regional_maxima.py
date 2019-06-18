@@ -47,7 +47,6 @@ ax3.axis('off')
 fig.tight_layout()
 
 
-
 h = 0.2
 seed = image - h
 dilated = reconstruction(seed, mask, method='dilation')
