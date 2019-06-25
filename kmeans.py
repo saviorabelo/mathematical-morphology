@@ -18,8 +18,8 @@ from functions import threshold_mean
 
 
 # Directory
-dir_in = './Dataset/acer_negundo/'
-dir_out = './Results KMeans/acer_negundo/'
+dir_in = './Dataset/ailanthus_altissima/'
+dir_out = './Results KMeans/ailanthus_altissima/'
 my_list = [x for x in os.listdir(dir_in) if x.endswith('.jpg')]
 
 for file_name in my_list:
@@ -53,7 +53,7 @@ for file_name in my_list:
     a = fig.add_subplot(3,3,1); a.axis('off'); plt.imshow(image, cmap='gray'); a.set_title('Original')
     a = fig.add_subplot(3,3,2); plt.imshow(img_kmeans, cmap='gray'); a.set_title('KMeans'); a.axis('off')
     a = fig.add_subplot(3,3,3); plt.imshow(img_close, cmap='gray'); a.set_title('Closing'); a.axis('off')
-    a = fig.add_subplot(3,3,4); plt.imshow(img_aux, cmap='gray'); a.set_title('Watershed - Closing'); a.axis('off')
+    a = fig.add_subplot(3,3,4); plt.imshow(img_aux, cmap='gray'); a.set_title('KMeans - Closing'); a.axis('off')
     a = fig.add_subplot(3,3,5); plt.imshow(img_ero, cmap='gray'); a.set_title('Erosion'); a.axis('off')
     a = fig.add_subplot(3,3,6); plt.imshow(img_dil, cmap='gray'); a.set_title('Dilation'); a.axis('off')
     plt.tight_layout()

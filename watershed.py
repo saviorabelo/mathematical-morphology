@@ -15,8 +15,8 @@ from functions import show_images_ws
 from functions import threshold_mean
 
 # Directory
-dir_in = './Dataset/acer_pensylvanicum/'
-dir_out = './Results Watershed/acer_pensylvanicum/'
+dir_in = './Dataset/acer_negundo/'
+dir_out = './Results Watershed/acer_negundo/'
 my_list = [x for x in os.listdir(dir_in) if x.endswith('.jpg')]
 
 for file_name in my_list:
