@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # Import library
 import os
+import cv2
 import math
 import numpy as np
 from scipy import ndimage
@@ -9,37 +10,35 @@ from skimage import morphology
 import matplotlib.pyplot as plt
 from skimage.color import rgb2gray
 from skimage.morphology import disk
+from sklearn.cluster import KMeans
 from skimage.filters import threshold_otsu
 # Import functions
 from functions import show_images_ws
 from functions import threshold_mean
 
+
 # Directory
-dir_in = './Dataset/acer_pensylvanicum/'
-dir_out = './Results Watershed/acer_pensylvanicum/'
+dir_in = './Dataset/acer_negundo/'
+dir_out = './Results KMeans/acer_negundo/'
 my_list = [x for x in os.listdir(dir_in) if x.endswith('.jpg')]
 
 for file_name in my_list:
 
-    img = imread(dir_in+file_name)
-    image = rgb2gray(img)
-    image_ext = morphology.dilation(image, disk(5)) - image
+    image = imread(dir_in+file_name)
 
-    # Watershed
-    m,n = image.shape
-    markers = np.zeros([m,n])
-    m = math.floor(m/2) # Center
-    n = math.floor(n/2)
-    markers[20:40,20:40] = 200
-    markers[m:m+20,n:n+20] = 100
-    ws = morphology.watershed(image_ext, markers)
+    # KMeans
+    (m ,n) = image.shape[:2]
+    img = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
+    image_vector = img.reshape((img.shape[0] * img.shape[1], 3))
+    kmeans = KMeans(n_clusters = 2)
+    labels = kmeans.fit_predict(image_vector)
+    quant = kmeans.cluster_centers_.astype('uint8')[labels]
+    aux = quant.reshape((m, n, 3))
+    img_kmeans = cv2.cvtColor(aux, cv2.COLOR_LAB2BGR)
+    img_kmeans = rgb2gray(img_kmeans)
 
-    # Plot
-    #show_images_ws(img, 255-image_ext, markers, ws)
-
-    #img_bin, mean = threshold_mean(ws)
-    otsu = threshold_otsu(ws)
-    img_bin = ((ws > otsu) * 255).astype('uint8')
+    otsu = threshold_otsu(img_kmeans)
+    img_bin = ((img_kmeans > otsu) * 255).astype('uint8')
 
     img_close = morphology.closing(img_bin, disk(11))
     img_aux = img_bin - img_close
@@ -51,8 +50,8 @@ for file_name in my_list:
 
     # Plot
     fig = plt.figure(figsize=(10,10), dpi=80)
-    a = fig.add_subplot(3,3,1); a.axis('off'); plt.imshow(img, cmap='gray'); a.set_title('Original')
-    a = fig.add_subplot(3,3,2); plt.imshow(ws, cmap='gray'); a.set_title('Watershed'); a.axis('off')
+    a = fig.add_subplot(3,3,1); a.axis('off'); plt.imshow(image, cmap='gray'); a.set_title('Original')
+    a = fig.add_subplot(3,3,2); plt.imshow(img_kmeans, cmap='gray'); a.set_title('KMeans'); a.axis('off')
     a = fig.add_subplot(3,3,3); plt.imshow(img_close, cmap='gray'); a.set_title('Closing'); a.axis('off')
     a = fig.add_subplot(3,3,4); plt.imshow(img_aux, cmap='gray'); a.set_title('Watershed - Closing'); a.axis('off')
     a = fig.add_subplot(3,3,5); plt.imshow(img_ero, cmap='gray'); a.set_title('Erosion'); a.axis('off')
